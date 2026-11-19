@@ -7,6 +7,7 @@
 - Separates local network, DNS, server listener and proxy failures before recommending a replacement.
 - Screens candidate regions, then tests the actual IP assigned to the selected instance. A provider speed-test endpoint is not proof that the assigned IP works.
 - Validates the subscription, the connection through Clash and the actual egress IP. Keeps the previous working profile available for rollback.
+- Restores Vultr account-level bandwidth reporting when replacing an instance. Reuses the read-only API key in the Mac's local login Keychain, updates the service user's IP allowlist, and verifies the refreshed Clash card against the monthly account usage.
 
 ## Install in Codex
 
@@ -22,6 +23,10 @@ Copy the whole skill directory, including `references/`. If the skill is already
 ## Use it
 
 > Use $vultr-clash-recovery to diagnose why my Mac cannot reach my Vultr VPS. Start with read-only checks and report what you verified before proposing changes.
+
+> Use $vultr-clash-recovery to configure the replacement VPS and restore monthly Vultr usage in Clash from my existing Mac login Keychain entry.
+
+The bandwidth workflow expects a local Keychain item labeled `Vultr-Account-Bandwidth` with service `Codex.Vultr.AccountBandwidth`. The backup stays on the Mac where it was saved. An available key can be reused without typing it again. macOS may ask you to unlock the Keychain or approve access.
 
 Provisioning, deleting an instance, or changing network settings requires the appropriate user approval. Keep private keys, tokens and subscription URLs out of the repository and logs.
 
